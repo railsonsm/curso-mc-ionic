@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NavController, MenuController, IonToolbar } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { MenuChangeEventDetail, MenuControllerI } from '@ionic/core';
@@ -8,14 +8,21 @@ import { MenuChangeEventDetail, MenuControllerI } from '@ionic/core';
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage {
+export class HomePage implements OnInit, OnDestroy {
 
-  constructor(private router: Router, private menu: MenuController) {
+  ngOnDestroy(): void {
+    this.menu.enable(true);
+  }
 
+  ngOnInit(): void {
+    this.menu.enable(false);
+  }
+
+  constructor(private router: NavController, private menu: MenuController) {
   }
 
   login() {
-    this.router.navigateByUrl('/categorias');
+    this.router.navigateRoot(['/categorias']);
   }
 
 }
